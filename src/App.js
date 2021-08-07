@@ -1,6 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
+import axios from 'axios';
+
+const url = "http://localhost:9000";
 
 class App extends Component {
   constructor(props) {
@@ -9,10 +11,9 @@ class App extends Component {
   }
 
   callAPI() {
-    fetch("http://localhost:9000/helloworld")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res}))
-      .catch(err => err);
+    axios.get(url + '/helloWorld')
+      .then((res) => this.setState({ apiResponse: res.data}))
+      .catch((err) => console.log(err))
   }
 
   componentDidMount() {
@@ -21,12 +22,12 @@ class App extends Component {
 
   render() {
     return(
-      <div className="app">
-        <div className = "hello-world"> 
-            {this.state.apiResponse}
-        </div>
+    <div className="app">
+      <div className = "hello-world"> 
+        {this.state.apiResponse}
       </div>
-    )
+    </div>
+  )
   }
 }
 
