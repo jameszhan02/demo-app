@@ -1,34 +1,23 @@
 import './App.css';
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Table from './Table'
 
-const url = "http://localhost:9000";
+const url = "http://localhost:8080";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { apiResponse: " "};
-  }
+export default function App() {
+  const [table, setTables] = useState('');
 
-  callAPI() {
-    axios.get(url + '/helloWorld')
-      .then((res) => this.setState({ apiResponse: res.data}))
-      .catch((err) => console.log(err))
-  }
-
-  componentDidMount() {
-    this.callAPI();
-  }
-
-  render() {
-    return(
-    <div className="app">
-      <div className = "hello-world"> 
-        {this.state.apiResponse}
-      </div>
-    </div>
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(url + "/tables")
+      console.log(response);
+      setTables(response.data.data.tables);
+    }
+    fetchData();
+  }, []);
+  
+  return (
+    <Table table={table}/>
   )
-  }
 }
-
-export default App;
