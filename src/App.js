@@ -2,10 +2,9 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from './Table'
-
 const url = "http://localhost:8080";
 
-export default function App() {
+export default function App(){
   const [table, setTables] = useState('');
 
   useEffect(() => {
@@ -18,6 +17,8 @@ export default function App() {
   }, []);
   
   return (
-    <Table table={table}/>
+    <div>
+      {table !== "" ? <Table table={table}/>: null}
+    </div>
   )
 }
